@@ -35,7 +35,7 @@ public class PlayerControl : MonoBehaviour
 
         onGround = floorCollider.IsTouching(floorFilter);
 
-        if (!jumped && Input.GetKeyDown(KeyCode.Space) && onGround)
+        if (!jumped && onGround)
         {
             jumped = true;
         }
