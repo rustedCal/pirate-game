@@ -5,9 +5,11 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour
 {
     [Header("Movement")]
-    public float horSpeed = 7.0f;
-    Rigidbody2D rB;
+    public float horSpeed = 10f;
+    Rigidbody2D rb;
     float horizontal;
+    private Vector3 touchPosition;
+    private Vector3 direction;
     private Animator anim;
     private SpriteRenderer sprite;
 
@@ -23,7 +25,7 @@ public class PlayerControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rB = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
     }
@@ -31,7 +33,7 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
+        horizontal = Input.GetAxis("Horizontal");
 
         onGround = floorCollider.IsTouching(floorFilter);
 
@@ -40,21 +42,41 @@ public class PlayerControl : MonoBehaviour
             jumped = true;
         }
 
-        UpdateAnimationUpdate();
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+            touchPosition.z = 0;
+            direction = (touchPosition - transform.position);
+            rb.velocity = new Vector2(direction.x * horSpeed, rb.velocity.y);
+            Debug.Log(Input.touchCount);
+
+            if (touch.phase == TouchPhase.Ended)
+            {
+                rb.velocity = Vector2.zero;
+            }
+        }
+        //UpdateAnimationUpdate();
     }
 
     private void FixedUpdate()
     {
-        rB.velocity = new Vector2(horizontal * horSpeed, rB.velocity.y);
-
         if (jumped)
         {
             jumped = false;
-            rB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+           //Debug.Log("i am a press");
+            //rb.AddForce(Vector2.right * -horSpeed, ForceMode2D.Impulse); 
+            //rb.velocity = Vector2.right * horSpeed;
+            //rb.velocity = new  Vector2(horizontal * horSpeed, rb.velocity.y);
         }
     }
 
-    private void UpdateAnimationUpdate()
+    /*private void UpdateAnimationUpdate()
     {
         if (horizontal > 0f)
         {
@@ -70,5 +92,5 @@ public class PlayerControl : MonoBehaviour
         {
             anim.SetBool("Running", false);
         }
-    }
+    }*/
 }
