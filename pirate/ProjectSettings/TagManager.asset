@@ -39,6 +39,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: backgrounbd
+    uniqueID: 2547107391
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
