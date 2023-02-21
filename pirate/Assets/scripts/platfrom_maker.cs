@@ -21,8 +21,8 @@ public class platfrom_maker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        platCount = GameObject.FindGameObjectsWithTag("platform").Length;//update plat count
-        Debug.Log(platCount);
+        platCount = GameObject.FindGameObjectsWithTag("platform").Length;//update platform count
+        //Debug.Log(platCount);//debug thing
         if (platCount < maxActivePlat)//if plats are less than how many we want active at a time, them make more
         {
             float randPosX;//random offset
@@ -35,7 +35,7 @@ public class platfrom_maker : MonoBehaviour
                 randPosX = offset;
             //create a new plat at the random x offset and the next y position for the platforms
             GameObject platObject = Instantiate(platPrefab, new Vector2(randPosX, nextplatY), Quaternion.identity);
-            Debug.Log("tryed to make new plat");
+            //Debug.Log("tryed to make new plat");//debug stuff
             nextplatY += distanceBetween;//ad to the y offset so that they dont satack ontop of eachother
         }
     }

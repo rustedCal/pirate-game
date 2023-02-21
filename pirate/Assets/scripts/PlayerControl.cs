@@ -22,8 +22,7 @@ public class PlayerControl : MonoBehaviour
     public Collider2D floorCollider;
     public ContactFilter2D floorFilter;
 
-    // Start is called before the first frame update
-    void Start()
+    void Start()//initalize everything
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -66,13 +65,24 @@ public class PlayerControl : MonoBehaviour
             jumped = false;
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
-
-        if (Input.GetMouseButton(0))
+        //--===INPUT-MOVEMENT===--//
+        if (Input.GetMouseButton(0))//pressed on screen
         {
-           //Debug.Log("i am a press");
-            //rb.AddForce(Vector2.right * -horSpeed, ForceMode2D.Impulse); 
-            //rb.velocity = Vector2.right * horSpeed;
-            //rb.velocity = new  Vector2(horizontal * horSpeed, rb.velocity.y);
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//get mouse posiotion reletive to main camera
+            Debug.Log(mousePos.x - transform.position.x);
+            if(mousePos.x > transform.position.x)//right side of the player, go right
+            {
+                rb.AddForce(Vector2.right * horSpeed);
+            }
+            else if (mousePos.x < transform.position.x)//left side of screen, go left
+            {
+                rb.AddForce(Vector2.right * -horSpeed);
+            }
+        }
+        //cansle out movement when not resiving active input
+        else
+        {
+            rb.AddForce(new Vector2(-rb.velocity.x * 2, 0));//cansles out velocity by adding the - of itself and a intencity multiplyer
         }
     }
 
