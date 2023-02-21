@@ -655,7 +655,7 @@ Camera:
   field of view: 60
   orthographic: 1
   orthographic size: 7.5
-  m_Depth: -1
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -741,7 +741,6 @@ GameObject:
   m_Component:
   - component: {fileID: 785271968}
   - component: {fileID: 785271967}
-  - component: {fileID: 785271966}
   m_Layer: 0
   m_Name: bg cam
   m_TagString: Untagged
@@ -749,14 +748,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &785271966
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 785271965}
-  m_Enabled: 1
 --- !u!20 &785271967
 Camera:
   m_ObjectHideFlags: 0
