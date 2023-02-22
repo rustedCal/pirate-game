@@ -103,4 +103,8 @@ public class PlayerControl : MonoBehaviour
             anim.SetBool("Running", false);
         }
     }*/
+    public float getPlayerY()
+    {
+        return rb.transform.position.y;
+    }
 }

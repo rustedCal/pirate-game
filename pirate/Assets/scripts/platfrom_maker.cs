@@ -23,7 +23,7 @@ public class platfrom_maker : MonoBehaviour
     {
         platCount = GameObject.FindGameObjectsWithTag("platform").Length;//update platform count
         //Debug.Log(platCount);//debug thing
-        if (platCount < maxActivePlat)//if plats are less than how many we want active at a time, them make more
+        if (nextplatY < Camera.main.orthographicSize + Camera.main.transform.position.y)//if the next platform position is less than trhe top of the main camera's position, execute below code
         {
             float randPosX;//random offset
             int temp = Random.Range(1, 4);
