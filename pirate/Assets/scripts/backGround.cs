@@ -8,7 +8,7 @@ public class backGround : MonoBehaviour
     //need a way to hook up to players.y and a 
     public bool movesHorizontly = false;
     public bool LeftOn_RightOff = false;
-
+    public float horzSpeed = 1.0f;
     public float scale = 1;
     Renderer render;
     public GameObject player;//get player object so that i can access the player script
@@ -20,9 +20,20 @@ public class backGround : MonoBehaviour
     }
     void Update()
     {
-        playVeloc = player.GetComponent<PlayerControl>();//update player velocity
-        Debug.Log(playVeloc.getPlayerY());
-        render.material.mainTextureOffset = new Vector2(0.0f, scale * -playVeloc.getPlayerY());
-       
+        playVeloc = player.GetComponent<PlayerControl>();//update player.y
+        Vector2 temp = new Vector2();
+        temp.y = scale * -playVeloc.getPlayerY();
+        if (movesHorizontly)
+        {
+            if (LeftOn_RightOff)
+            {
+                temp.x = Time.time * horzSpeed;
+            }
+            else
+            {
+                temp.x = Time.time * -horzSpeed;
+            }
+        }
+        render.material.mainTextureOffset = temp;
     }
 }
