@@ -22,11 +22,14 @@ public class PlayerControl : MonoBehaviour
     public Collider2D floorCollider;
     public ContactFilter2D floorFilter;
 
+    //audio
+    AudioSource audio;
     void Start()//initalize everything
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
+        audio = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
