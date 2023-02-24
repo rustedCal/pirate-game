@@ -24,6 +24,7 @@ public class PlayerControl : MonoBehaviour
 
     //audio
     AudioSource audio;
+    public AudioClip jumpClip;
     void Start()//initalize everything
     {
         rb = GetComponent<Rigidbody2D>();
@@ -35,15 +36,28 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizontal = Input.GetAxis("Horizontal");
-
         onGround = floorCollider.IsTouching(floorFilter);
 
         if (!jumped && onGround)
         {
             jumped = true;
+            audio.PlayOneShot(jumpClip);
         }
 
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+            touchPosition.z = 0;
+            direction = (touchPosition - transform.position);
+            rb.velocity = new Vector2(direction.x * horSpeed, rb.velocity.y);
+            Debug.Log(Input.touchCount);
+
+            if (touch.phase == TouchPhase.Ended)
+            {
+                rb.velocity = Vector2.zero;
+            }
+        }
         //UpdateAnimationUpdate();
     }
 
