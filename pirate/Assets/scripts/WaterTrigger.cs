@@ -27,6 +27,7 @@ public class WaterTrigger : MonoBehaviour
             Debug.Log("Player is ded >:)");
             PlayerControl temp = collision.GetComponent<PlayerControl>();
             temp.killPlayer();
+            speed = 0.0f;
         }
     }
 }
