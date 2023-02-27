@@ -25,6 +25,222 @@ public class PlayerControl : MonoBehaviour
     //audio
     AudioSource audio;
     public AudioClip jumpClip;
+    //things
+    bool isDead = false;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     void Start()//initalize everything
     {
         rb = GetComponent<Rigidbody2D>();
@@ -36,56 +252,63 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        onGround = floorCollider.IsTouching(floorFilter);
-
-        if (!jumped && onGround)
+        if (!isDead)
         {
-            jumped = true;
-            audio.PlayOneShot(jumpClip);
-        }
+            onGround = floorCollider.IsTouching(floorFilter);
 
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-            touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
-            touchPosition.z = 0;
-            direction = (touchPosition - transform.position);
-            rb.velocity = new Vector2(direction.x * horSpeed, rb.velocity.y);
-            Debug.Log(Input.touchCount);
-
-            if (touch.phase == TouchPhase.Ended)
+            if (!jumped && onGround)
             {
-                rb.velocity = Vector2.zero;
+                jumped = true;
+                audio.PlayOneShot(jumpClip);
             }
+
+            if (Input.touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);
+                touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+                touchPosition.z = 0;
+                direction = (touchPosition - transform.position);
+                rb.velocity = new Vector2(direction.x * horSpeed, rb.velocity.y);
+                Debug.Log(Input.touchCount);
+
+                if (touch.phase == TouchPhase.Ended)
+                {
+                    rb.velocity = Vector2.zero;
+                }
+            }
+            //UpdateAnimationUpdate();
         }
-        //UpdateAnimationUpdate();
     }
 
     private void FixedUpdate()
     {
-        if (jumped)
+        if (!isDead)
         {
-            jumped = false;
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        }
-        //--===INPUT-MOVEMENT===--//
-        if (Input.GetMouseButton(0))//pressed on screen
-        {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//get mouse posiotion reletive to main camera
-            Debug.Log(mousePos.x - transform.position.x);
-            if(mousePos.x > transform.position.x)//right side of the player, go right
+            if (jumped)
             {
-                rb.AddForce(Vector2.right * horSpeed);
+                jumped = false;
+                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             }
-            else if (mousePos.x < transform.position.x)//left side of screen, go left
+            //--===INPUT-MOVEMENT===--//
+            if (Input.GetMouseButton(0))//pressed on screen
             {
-                rb.AddForce(Vector2.right * -horSpeed);
+                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//get mouse posiotion reletive to main camera
+                Debug.Log(mousePos.x - transform.position.x);
+                if (mousePos.x > transform.position.x)//right side of the player, go right
+                {
+                    rb.AddForce(Vector2.right * horSpeed);
+                }
+                else if (mousePos.x < transform.position.x)//left side of screen, go left
+                {
+                    rb.AddForce(Vector2.right * -horSpeed);
+                }
             }
-        }
-        //cansle out movement when not resiving active input
-        else
-        {
-            rb.AddForce(new Vector2(-rb.velocity.x * 2, 0));//cansles out velocity by adding the - of itself and a intencity multiplyer
+            //cansle out movement when not resiving active input
+            else
+            {
+                rb.AddForce(new Vector2(-rb.velocity.x * 2, 0));//cansles out velocity by adding the - of itself and a intencity multiplyer
+            }
+
         }
     }
 
@@ -109,5 +332,13 @@ public class PlayerControl : MonoBehaviour
     public float getPlayerY()
     {
         return rb.transform.position.y;
+    }
+    public void killPlayer()
+    {
+        //freeze player in place and play an animation
+        isDead = true;//to stop other plarts of the script
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = 0;
+        //[]add an animation thingie here
     }
 }
