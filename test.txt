@@ -1,1 +1,0 @@
-remember to save your unity project before doing anything w/ the github stuff
