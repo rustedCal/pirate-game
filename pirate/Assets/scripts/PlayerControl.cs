@@ -25,10 +25,12 @@ public class PlayerControl : MonoBehaviour
     //audio
     AudioSource audio;
     public AudioClip jumpClip;
+    public AudioClip deathsfx;
     //things
     bool isDead = false;
     int coinCount = 0;
     public TextMeshProUGUI cointxt;
+    public GameObject deathmenu;
 
     void Start()//initalize everything
     {
@@ -130,7 +132,9 @@ public class PlayerControl : MonoBehaviour
         isDead = true;//to stop other plarts of the script
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0;
-        //[]add an animation thingie here
+        anim.SetBool("dead", true);
+        deathmenu.SetActive(true);
+        audio.PlayOneShot(deathsfx);
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
