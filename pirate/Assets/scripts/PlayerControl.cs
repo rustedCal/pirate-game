@@ -29,6 +29,7 @@ public class PlayerControl : MonoBehaviour
     bool isDead = false;
     int coinCount = 0;
     public TextMeshProUGUI cointxt;
+    public GameObject deathmenu;
 
     void Start()//initalize everything
     {
@@ -130,7 +131,8 @@ public class PlayerControl : MonoBehaviour
         isDead = true;//to stop other plarts of the script
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0;
-        //[]add an animation thingie here
+        anim.SetBool("dead", true);
+        deathmenu.SetActive(true);
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
