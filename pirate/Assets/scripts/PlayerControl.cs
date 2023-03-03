@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class PlayerControl : MonoBehaviour
 {
     [Header("Movement")]
@@ -27,6 +27,8 @@ public class PlayerControl : MonoBehaviour
     public AudioClip jumpClip;
     //things
     bool isDead = false;
+    int coinCount = 0;
+    public TextMeshProUGUI cointxt;
 
     void Start()//initalize everything
     {
@@ -42,11 +44,14 @@ public class PlayerControl : MonoBehaviour
         if (!isDead)
         {
             onGround = floorCollider.IsTouching(floorFilter);
-
+            //Animation-stuff
+            anim.SetBool("grounded", jumped);
+            anim.SetFloat("velocY", rb.velocity.y);
             if (!jumped && onGround)
             {
                 jumped = true;
                 audio.PlayOneShot(jumpClip);
+
             }
 
             if (Input.touchCount > 0)
@@ -80,7 +85,6 @@ public class PlayerControl : MonoBehaviour
             if (Input.GetMouseButton(0))//pressed on screen
             {
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//get mouse posiotion reletive to main camera
-                Debug.Log(mousePos.x - transform.position.x);
                 if (mousePos.x > transform.position.x)//right side of the player, go right
                 {
                     rb.AddForce(Vector2.right * horSpeed);
@@ -127,5 +131,15 @@ public class PlayerControl : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0;
         //[]add an animation thingie here
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.tag == "coin")
+        {
+            Debug.Log("asdsadas");
+            Destroy(other.gameObject);
+            coinCount++;
+            cointxt.text = ": " + coinCount.ToString();
+        }
     }
 }
