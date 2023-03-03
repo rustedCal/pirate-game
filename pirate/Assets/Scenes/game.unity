@@ -687,6 +687,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   jumpClip: {fileID: 8300000, guid: 64bca64601374244aaa54cdf64f9c76e, type: 3}
+  deathsfx: {fileID: 8300000, guid: c00ceed393817d041b4381485812889e, type: 3}
   cointxt: {fileID: 460422505}
   deathmenu: {fileID: 1269079728}
 --- !u!60 &431268688
@@ -716,7 +717,7 @@ PolygonCollider2D:
     m_Paths:
     - - {x: -5.692002, y: 10.421412}
       - {x: -5.607899, y: -7.334817}
-      - {x: 3.914607, y: -7.8983126}
+      - {x: 3.535827, y: -7.1407537}
       - {x: 3.3512778, y: 10.584013}
 --- !u!82 &431268689
 AudioSource:
@@ -2007,7 +2008,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ba783f5c8104da498fd2f7c41005d7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 180f4b697942b294fa5d18ea85456dee, type: 3}
 --- !u!4 &1498762102
 Transform:
   m_ObjectHideFlags: 0

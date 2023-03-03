@@ -25,6 +25,7 @@ public class PlayerControl : MonoBehaviour
     //audio
     AudioSource audio;
     public AudioClip jumpClip;
+    public AudioClip deathsfx;
     //things
     bool isDead = false;
     int coinCount = 0;
@@ -133,6 +134,7 @@ public class PlayerControl : MonoBehaviour
         rb.gravityScale = 0;
         anim.SetBool("dead", true);
         deathmenu.SetActive(true);
+        audio.PlayOneShot(deathsfx);
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
